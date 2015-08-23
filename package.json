@@ -1,0 +1,65 @@
+{
+  "name": "postcss-selector-source",
+  "version": "0.0.0",
+  "description": "A PostCSS plugin for finding the original line and column position of your CSS selectors and declarations from your pre-processed SASS/SCSS files",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "gulp",
+    "build": "gulp build",
+    "coverage": "gulp coverage",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a-axton/postcss-selector-source.git"
+  },
+  "keywords": [
+    "postcss-plugin",
+    "postcss",
+    "source-maps",
+    "css",
+    "selectors",
+    "preprocessor"
+  ],
+  "author": "Andy Axton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/a-axton/postcss-selector-source/issues"
+  },
+  "homepage": "https://github.com/a-axton/postcss-selector-source",
+  "devDependencies": {
+    "babel": "^4.3.0",
+    "chai": "^2.0.0",
+    "del": "^1.1.1",
+    "gulp": "^3.8.10",
+    "gulp-babel": "^4.0.0",
+    "gulp-istanbul": "^0.6.0",
+    "gulp-jscs": "^1.4.0",
+    "gulp-jshint": "^1.9.0",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-node-inspector": "0.0.4",
+    "gulp-nodemon": "^2.0.3",
+    "gulp-notify": "^2.1.0",
+    "gulp-plumber": "^0.6.6",
+    "isparta": "^2.0.0",
+    "jshint-stylish": "^1.0.0",
+    "mkdirp": "^0.5.0",
+    "mocha": "^2.1.0",
+    "node-sass": "^3.2.0",
+    "sinon": "^1.12.2",
+    "sinon-chai": "^2.7.0"
+  },
+  "nodeBoilerplateOptions": {
+    "mochaGlobals": [
+      "stub",
+      "spy",
+      "expect"
+    ]
+  },
+  "dependencies": {
+    "postcss": "^4.1.16",
+    "scouter": "git://github.com/a-axton/scouter.git#master",
+    "source-map": "^0.4.4"
+  }
+}
