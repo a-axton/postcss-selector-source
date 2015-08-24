@@ -17,9 +17,14 @@
     "postcss-plugin",
     "postcss",
     "source-maps",
+    "source-map",
     "css",
     "selectors",
-    "preprocessor"
+    "preprocessor",
+    "scss",
+    "sass",
+    "stylus",
+    "less"
   ],
   "author": "Andy Axton",
   "license": "MIT",
