@@ -49,10 +49,10 @@ function _buildMediaParams(params) {
 }
 
 function _buildRuleEntry(rule) {
-  console.log(rule);
   if (rule.source.start.line < removeAbove.line) {
     return;
   }
+
   var start = rule.source.start;
   var end = rule.source.end;
   var decls = _buildDecls(rule.nodes);
@@ -76,8 +76,9 @@ function _buildRuleEntry(rule) {
   selectors.push(entry);
 }
 
-module.exports = postcss.plugin("selector-source", function (options, callback) {
-  console.log("options", options, callback);
+module.exports = postcss.plugin("selector-source", function () {
+  var options = arguments[0] === undefined ? {} : arguments[0];
+
   // logs each selector with startend position
   return function (css, result) {
     css.eachComment(function (comment) {
@@ -93,12 +94,17 @@ module.exports = postcss.plugin("selector-source", function (options, callback) 
     if (!source.sourceMapURL) {
       result.warn("make sure an external css source-map is being generated");
     }
-    callback(selectors);
 
-    if (callback && typeof callback === "function") {
-      callback(selectors);
-    } else {}
+    if (!options.cssRootDir) {
+      result.warn("use the cssRootDir option to specify where your css source map file is");
+    }
+
+    if (options.callback && typeof options.callback === "function") {
+      options.callback(selectors);
+    } else {
+      result.warn("provide a callback to see the results");
+    }
+
+    return result;
   };
 });
-
-// result.warn('provide a callback for postcss-selector-source to see the results');

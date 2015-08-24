@@ -12,16 +12,17 @@ var Source = (function () {
   function Source() {
     _classCallCheck(this, Source);
 
-    this.sourceMapURL = "./test/fixtures/test.css.map";
-    var map = fs.readFileSync(this.sourceMapURL);
-    this.smc = new sourceMap.SourceMapConsumer(JSON.parse(map));
+    this.sourceMapURL = null;
   }
 
   _createClass(Source, {
     setSourceMapURL: {
       value: function setSourceMapURL(cssRootDir, sourceMapURLComment) {
-        var sourceMapURL = sourceMapURLComment.split("/").pop();
-        var map = fs.readFileSync(cssRootDir + sourceMapURL);
+        if (!cssRootDir) {
+          return;
+        }
+        this.sourceMapURL = sourceMapURLComment.split("/").pop();
+        var map = fs.readFileSync(cssRootDir + this.sourceMapURL);
         this.smc = new sourceMap.SourceMapConsumer(JSON.parse(map));
       }
     },

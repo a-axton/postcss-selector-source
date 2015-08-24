@@ -1,0 +1,15 @@
+@import 'variable-includes'
+@import 'should-not-include'
+
+/* !ATTN */
+
+.first-selector 
+  content 'first selector'
+  color variable-color
+
+  @media (max-width: 300px)
+    content 'first selector media query'
+    width variable-unit
+
+    .first-selector-nested
+      content 'first selector nested media query'

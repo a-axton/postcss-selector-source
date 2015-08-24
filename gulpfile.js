@@ -57,7 +57,7 @@ gulp.task('build', ['lint-src', 'clean'], function() {
     .pipe(gulp.dest(destinationFolder));
 });
 
-function test() {
+function test(type) {
   return gulp.src(['test/setup/node.js', 'test/unit/**/*.js'], {read: false})
     .pipe($.plumber())
     .pipe($.mocha({reporter: 'dot', globals: config.mochaGlobals}));
@@ -86,7 +86,8 @@ gulp.task('babel', function () {
 });
 
 // Lint and run our tests
-gulp.task('test', ['lint-src', 'lint-test'], test);
+// gulp.task('test', ['lint-src', 'lint-test'], test);
+gulp.task('test', test);
 
 // Run the headless unit tests as you make changes.
 gulp.task('watch', ['debug'], function() {

@@ -1,5 +1,5 @@
 # postcss-selector-source
-A PostCSS plugin for finding the original line and column position of your CSS selectors and declarations from your pre-processed SASS/SCSS files. It may work with other preprocessors like LESS or Stylus but they have not been tested.
+A PostCSS plugin for finding the original line and column position of your CSS selectors and declarations from your pre-processed SASS/SCSS/LESS/Stylus files.
 
 ## Installation
 ```bash
