@@ -96,9 +96,7 @@ function getData(done, type) {
 }
 
 describe('postcss-selector-source tests', () => {
-  Object.keys(sources).forEach(function(type){
-    var selectors = sources[type];
-    
+  Object.keys(sources).forEach(function(type){    
     before(function(done) {
       getData(done, type);
     });
