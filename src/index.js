@@ -17,13 +17,14 @@ function _buildDecls(decls) {
   return decls.map(decl => {
     let start = decl.source.start;
     let end = decl.source.end;
+    let important = decl.important ? true : false;
     let entry = {
       property: decl.prop,
       value: decl.value,
+      important: important,
       start: start,
       end: end
     };
-
     if (source.sourceMapURL) {
       entry.originalPosition = source.getOriginalPosition(start, end);
     }

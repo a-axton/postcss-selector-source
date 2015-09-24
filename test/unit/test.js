@@ -60,7 +60,7 @@ function getSassData(done) {
 
 function getLessData(done) {
   var lessInput = fs.readFileSync('./test/fixtures/less/src/test.less');
-  
+
   less.render(lessInput.toString().trim(), {
       filename: './test/fixtures/less/src/test.less',
       includePaths: './test/fixtures/less/src'
@@ -96,7 +96,7 @@ function getData(done, type) {
 }
 
 describe('postcss-selector-source tests', () => {
-  Object.keys(sources).forEach(function(type){    
+  Object.keys(sources).forEach(function(type){
     before(function(done) {
       getData(done, type);
     });
@@ -124,6 +124,10 @@ describe('postcss-selector-source tests', () => {
 
       it('should get original ending column of selector', () => {
         expect(sources[type][0].originalPosition.end.column).to.equal(17);
+      });
+
+      it('should register properties as important', () => {
+        expect(sources[type][0].decls[1].important).to.equal(true);
       });
     });
   });

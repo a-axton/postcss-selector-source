@@ -38,89 +38,169 @@ Anything declared above this comment won't show up in the results.
 ## Sample output
 ```javascript
 [
-  {  
-   "selector":".first-selector",
-   "selectors":[  
-      ".first-selector"
-   ],
-   "specificity":10,
-   "decls":[  
-      {  
-         "property":"content",
-         "value":"'first selector'",
-         "start":{  
-            "line":6,
-            "column":3
-         },
-         "end":{  
-            "line":6,
-            "column":28
-         },
-         "originalPosition":{  
-            "start":{  
-               "source":"scss/test.scss",
-               "line":7,
-               "column":2,
-               "name":null
-            },
-            "end":{  
-               "source":"scss/test.scss",
-               "line":7,
-               "column":28,
-               "name":null
-            }
-         }
+  {
+    "selector": ".first-selector",
+    "selectors": [".first-selector"],
+    "specificity": 10,
+    "decls": [{
+      "property": "content",
+      "value": "'first selector'",
+      "important": false,
+      "start": {
+        "line": 6,
+        "column": 3
       },
-      {  
-         "property":"color",
-         "value":"#ffffff",
-         "start":{  
-            "line":7,
-            "column":3
-         },
-         "end":{  
-            "line":7,
-            "column":17
-         },
-         "originalPosition":{  
-            "start":{  
-               "source":"scss/test.scss",
-               "line":8,
-               "column":2,
-               "name":null
-            },
-            "end":{  
-               "source":"scss/_variable-includes.scss",
-               "line":1,
-               "column":24,
-               "name":null
-            }
-         }
-      }
-   ],
-   "start":{  
-      "line":5,
-      "column":1
-   },
-   "end":{  
-      "line":7,
-      "column":19
-   },
-   "originalPosition":{  
-      "start":{  
-         "source":"scss/test.scss",
-         "line":6,
-         "column":0,
-         "name":null
+      "end": {
+        "line": 6,
+        "column": 28
       },
-      "end":{  
-         "source":"scss/test.scss",
-         "line":6,
-         "column":17,
-         "name":null
+      "originalPosition": {
+        "start": {
+          "source": "src/test.scss",
+          "line": 7,
+          "column": 2,
+          "name": null
+        },
+        "end": {
+          "source": "src/test.scss",
+          "line": 7,
+          "column": 28,
+          "name": null
+        }
       }
-   }
- }
- ...
+    }, {
+      "property": "color",
+      "value": "#ffffff",
+      "important": true,
+      "start": {
+        "line": 7,
+        "column": 3
+      },
+      "end": {
+        "line": 7,
+        "column": 28
+      },
+      "originalPosition": {
+        "start": {
+          "source": "src/test.scss",
+          "line": 8,
+          "column": 2,
+          "name": null
+        },
+        "end": {
+          "source": "src/test.scss",
+          "line": 8,
+          "column": 35,
+          "name": null
+        }
+      }
+    }],
+    "start": {
+      "line": 5,
+      "column": 1
+    },
+    "end": {
+      "line": 7,
+      "column": 30
+    },
+    "originalPosition": {
+      "start": {
+        "source": "src/test.scss",
+        "line": 6,
+        "column": 0,
+        "name": null
+      },
+      "end": {
+        "source": "src/test.scss",
+        "line": 6,
+        "column": 17,
+        "name": null
+      }
+    }
+  }, {
+    "selector": ".first-selector",
+    "selectors": [".first-selector"],
+    "specificity": 10,
+    "decls": [{
+      "property": "content",
+      "value": "'first selector media query'",
+      "important": false,
+      "start": {
+        "line": 10,
+        "column": 7
+      },
+      "end": {
+        "line": 10,
+        "column": 44
+      },
+      "originalPosition": {
+        "start": {
+          "source": "src/test.scss",
+          "line": 11,
+          "column": 4,
+          "name": null
+        },
+        "end": {
+          "source": "src/test.scss",
+          "line": 11,
+          "column": 42,
+          "name": null
+        }
+      }
+    }, {
+      "property": "width",
+      "value": "500px",
+      "important": false,
+      "start": {
+        "line": 11,
+        "column": 7
+      },
+      "end": {
+        "line": 11,
+        "column": 19
+      },
+      "originalPosition": {
+        "start": {
+          "source": "src/test.scss",
+          "line": 12,
+          "column": 4,
+          "name": null
+        },
+        "end": {
+          "source": "src/_variable-includes.scss",
+          "line": 2,
+          "column": 21,
+          "name": null
+        }
+      }
+    }],
+    "start": {
+      "line": 9,
+      "column": 5
+    },
+    "end": {
+      "line": 11,
+      "column": 21
+    },
+    "params": [{
+      "property": "max-width",
+      "value": "300px"
+    }],
+    "originalPosition": {
+      "start": {
+        "source": "src/test.scss",
+        "line": 6,
+        "column": 0,
+        "name": null
+      },
+      "end": {
+        "source": "src/test.scss",
+        "line": 6,
+        "column": 17,
+        "name": null
+      }
+    }
+  }
+...
 ]
 ```
