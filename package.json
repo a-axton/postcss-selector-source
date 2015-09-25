@@ -65,7 +65,7 @@
     ]
   },
   "dependencies": {
-    "postcss": "^4.1.16",
+    "postcss": "^5.0.6",
     "scouter": "git://github.com/divshot/scouter.git#master",
     "source-map": "^0.4.4"
   }

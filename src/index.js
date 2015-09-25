@@ -74,7 +74,7 @@ function _buildRuleEntry(rule) {
 export default postcss.plugin('selector-source', (options = {}) => {
   // logs each selector with startend position
   return function(css, result) {
-    css.eachComment(function(comment) {
+    css.walkComments(function(comment) {
       if (comment.text.indexOf('!ATTN') > -1) {
         removeAbove.set(comment.source.start.line);
       } else if (comment.text.indexOf('sourceMappingURL') > -1) {
@@ -82,7 +82,7 @@ export default postcss.plugin('selector-source', (options = {}) => {
       }
     });
 
-    css.eachRule(_buildRuleEntry);
+    css.walkRules(_buildRuleEntry);
 
     if (!source.sourceMapURL) {
       result.warn('make sure an external css source-map is being generated');
