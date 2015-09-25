@@ -1,6 +1,6 @@
 {
   "name": "postcss-selector-source",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A PostCSS plugin for finding the original line and column position of your CSS selectors and declarations from your pre-processed SASS/SCSS/LESS/Stylus files",
   "main": "dist/index.js",
   "scripts": {
