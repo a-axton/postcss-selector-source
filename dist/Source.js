@@ -8,22 +8,26 @@ var fs = _interopRequire(require("fs"));
 
 var sourceMap = _interopRequire(require("source-map"));
 
+var convert = _interopRequire(require("convert-source-map"));
+
 var Source = (function () {
   function Source() {
     _classCallCheck(this, Source);
 
-    this.sourceMapURL = null;
+    this.smc = null;
   }
 
   _createClass(Source, {
-    setSourceMapURL: {
-      value: function setSourceMapURL(cssRootDir, sourceMapURLComment) {
-        if (!cssRootDir) {
-          return;
+    setSourceMap: {
+      value: function setSourceMap(sourceMapURLComment) {
+        if (sourceMapURLComment.indexOf("base64") > -1) {
+          var map = convert.fromComment(sourceMapURLComment).toObject();
+          this.smc = new sourceMap.SourceMapConsumer(map);
+        } else {
+          var sourceMapURL = sourceMapURLComment.split("=").pop();
+          var map = fs.readFileSync(sourceMapURL);
+          this.smc = new sourceMap.SourceMapConsumer(JSON.parse(map));
         }
-        this.sourceMapURL = sourceMapURLComment.split("/").pop();
-        var map = fs.readFileSync(cssRootDir + this.sourceMapURL);
-        this.smc = new sourceMap.SourceMapConsumer(JSON.parse(map));
       }
     },
     getOriginalPosition: {

@@ -25,7 +25,6 @@ function _buildDecls(decls) {
       start: start,
       end: end
     };
-    
     if (source.smc) {
       entry.originalPosition = source.getOriginalPosition(start, end);
     }
