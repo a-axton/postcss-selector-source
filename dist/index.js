@@ -21,13 +21,14 @@ function _buildDecls(decls) {
   return decls.map(function (decl) {
     var start = decl.source.start;
     var end = decl.source.end;
+    var important = decl.important ? true : false;
     var entry = {
       property: decl.prop,
       value: decl.value,
+      important: important,
       start: start,
       end: end
     };
-
     if (source.sourceMapURL) {
       entry.originalPosition = source.getOriginalPosition(start, end);
     }
@@ -81,7 +82,7 @@ module.exports = postcss.plugin("selector-source", function () {
 
   // logs each selector with startend position
   return function (css, result) {
-    css.eachComment(function (comment) {
+    css.walkComments(function (comment) {
       if (comment.text.indexOf("!ATTN") > -1) {
         removeAbove.set(comment.source.start.line);
       } else if (comment.text.indexOf("sourceMappingURL") > -1) {
@@ -89,7 +90,7 @@ module.exports = postcss.plugin("selector-source", function () {
       }
     });
 
-    css.eachRule(_buildRuleEntry);
+    css.walkRules(_buildRuleEntry);
 
     if (!source.sourceMapURL) {
       result.warn("make sure an external css source-map is being generated");

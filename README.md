@@ -1,6 +1,9 @@
 # postcss-selector-source
 A PostCSS plugin for finding the original line and column position of your CSS selectors and declarations from your pre-processed SASS/SCSS/LESS/Stylus files.
 
+## Important
+This plugin requires source maps to work properly. Works with embedded or external source maps.
+
 ## Installation
 ```bash
 npm install --save postcss-selector-source
@@ -15,11 +18,9 @@ var postcss = require('postcss');
 var selectorSource = require('postcss-selector-source');
 
 postcss([
-  selectorSource({
-    cssRootDir: './path/to/css/',
-    function(selectors) {
-      console.log(selectors);
-  }})
+  selectorSource(function(selectors) {
+    console.log(selectors);
+  })
 ]).process(css);
 ```
 
