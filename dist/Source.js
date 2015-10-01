@@ -25,9 +25,10 @@ var Source = (function () {
           this.smc = new sourceMap.SourceMapConsumer(map);
         } else {
           var sourceMapURL = sourceMapURLComment.split("=").pop();
-          var map = fs.readFileSync(sourceMapURL);
+          var map = fs.readFileSync(sourceMapURL).toString();
           this.smc = new sourceMap.SourceMapConsumer(JSON.parse(map));
         }
+        // console.log(this.smc)
       }
     },
     getOriginalPosition: {

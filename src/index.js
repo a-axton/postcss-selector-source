@@ -2,10 +2,10 @@ import postcss from 'postcss';
 import { Scouter } from 'scouter';
 import Source from './Source';
 
-const source = new Source();
-const scouter = new Scouter();
-const selectors = [];
-const removeAbove = {
+let source = new Source();
+let scouter = new Scouter();
+let selectors = [];
+let removeAbove = {
   line: 0,
   set: function(line) {
     this.line = line;
@@ -72,6 +72,7 @@ function _buildRuleEntry(rule) {
 }
 
 export default postcss.plugin('selector-source', (callback) => {
+  selectors = [];
   // logs each selector with startend position
   return function(css, result) {
     css.walkComments(function(comment) {

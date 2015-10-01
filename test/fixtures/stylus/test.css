@@ -1,0 +1,18 @@
+.should-not-include {
+  color: #f00;
+}
+/* !ATTN */
+.first-selector {
+  content: 'first selector';
+  color: #fff !important;
+}
+@media (max-width: 300px) {
+  .first-selector {
+    content: 'first selector media query';
+    width: 500px;
+  }
+  .first-selector .first-selector-nested {
+    content: 'first selector nested media query';
+  }
+}
+/*# sourceMappingURL=test/fixtures/stylus/src/test.css.map */

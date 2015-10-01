@@ -13,9 +13,10 @@ class Source {
       this.smc = new sourceMap.SourceMapConsumer(map);
     } else {
       let sourceMapURL = sourceMapURLComment.split('=').pop();
-      let map = fs.readFileSync(sourceMapURL);
+      let map = fs.readFileSync(sourceMapURL).toString();
       this.smc = new sourceMap.SourceMapConsumer(JSON.parse(map));
     }
+    // console.log(this.smc)
   }
 
   getOriginalPosition(start, end) {

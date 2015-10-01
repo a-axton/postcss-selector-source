@@ -78,6 +78,7 @@ function _buildRuleEntry(rule) {
 }
 
 module.exports = postcss.plugin("selector-source", function (callback) {
+  selectors = [];
   // logs each selector with startend position
   return function (css, result) {
     css.walkComments(function (comment) {

@@ -38,8 +38,11 @@ function getSassData(done) {
     file: './test/fixtures/scss/src/test.scss',
     sourceMap: './test/fixtures/scss/test.css.map',
     outfile: './test/fixtures/scss/test.css',
+    outputStyle: 'expanded',
     sourceMapEmbed: true
   }, function(err, results) {
+    fs.writeFileSync('./test/fixtures/scss/test.css', results.css.toString().trim());
+
     postcss([
       selectorList(function(result) {
         sources.sass = result;
@@ -54,12 +57,15 @@ function getSassData(done) {
 function getLessData(done) {
   var lessInput = fs.readFileSync('./test/fixtures/less/src/test.less');
 
-  less.render(lessInput.toString().trim(), {
+  less.render(lessInput.toString(), {
       filename: './test/fixtures/less/src/test.less',
-      includePaths: './test/fixtures/less/src'
+      includePaths: './test/fixtures/less/src',
+      sourceMap: {
+        sourceMapFileInline: true
+      }
     })
     .then(function(output) {
-      fs.writeFileSync('./test/fixtures/less/test.css.map', output.map);
+      fs.writeFileSync('./test/fixtures/less/test.css', output.css);
 
       postcss([
         selectorList(function(result) {
@@ -67,7 +73,7 @@ function getLessData(done) {
           done();
         })
       ])
-      .process(output.css.toString().trim())
+      .process(output.css)
       .then(function() {});
     },
     function(error) {
