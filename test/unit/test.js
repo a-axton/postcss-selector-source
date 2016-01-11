@@ -7,6 +7,7 @@ import fs from 'fs';
 
 var sources = {
   sass: [],
+  scss: [],
   less: [],
   stylus: []
 };
@@ -33,7 +34,7 @@ function getStylusData(done) {
   });
 }
 
-function getSassData(done) {
+function getScssData(done) {
   sass.render({
     file: './test/fixtures/scss/src/test.scss',
     sourceMap: './test/fixtures/scss/test.css.map',
@@ -42,6 +43,27 @@ function getSassData(done) {
     sourceMapEmbed: true
   }, function(err, results) {
     fs.writeFileSync('./test/fixtures/scss/test.css', results.css.toString().trim());
+
+    postcss([
+      selectorList(function(result) {
+        sources.scss = result;
+        done();
+      })
+    ])
+    .process(results.css.toString().trim())
+    .then(function() {});
+  });
+}
+
+function getSassData(done) {
+  sass.render({
+    file: './test/fixtures/sass/src/test.sass',
+    sourceMap: './test/fixtures/sass/test.css.map',
+    outfile: './test/fixtures/sass/test.css',
+    outputStyle: 'expanded',
+    sourceMapEmbed: true
+  }, function(err, results) {
+    fs.writeFileSync('./test/fixtures/sass/test.css', results.css.toString().trim());
 
     postcss([
       selectorList(function(result) {
@@ -82,13 +104,13 @@ function getLessData(done) {
 }
 
 function getData(done, type) {
-  if (type === 'less') {
-    getLessData(done);
-  } else if (type === 'sass') {
-    getSassData(done);
-  } else if (type === 'stylus') {
-    getStylusData(done);
+  let get = {
+    less: getLessData,
+    scss: getScssData,
+    sass: getSassData,
+    stylus: getStylusData,
   }
+  get[type](done);
 }
 
 describe('postcss-selector-source tests', () => {
@@ -97,17 +119,13 @@ describe('postcss-selector-source tests', () => {
       getData(done, type);
     });
 
-    describe('parsing tests '+type, () => {
+    describe('parsing tests ' + type, () => {
       it('should not be empty', () => {
         expect(sources[type].length).to.not.equal(0);
       });
 
-      it('should cut off sources before !ATTN comment', () => {
-        expect(sources[type][0].selector).to.not.equal('.should-not-include');
-      });
-
       it('should get original starting line of selector', () => {
-        expect(sources[type][0].originalPosition.start.line).to.equal(6);
+        expect(sources[type][0].originalPosition.start.line).to.equal(1);
       });
 
       it('should get original starting column of selector', () => {
@@ -115,15 +133,23 @@ describe('postcss-selector-source tests', () => {
       });
 
       it('should get original ending line of selector', () => {
-        expect(sources[type][0].originalPosition.end.line).to.equal(6);
+        if (type === 'less' || type === 'stylus') {
+          expect(sources[type][0].originalPosition.end).to.equal(null);
+        } else {
+          expect(sources[type][0].originalPosition.end.line).to.equal(1);
+        }
       });
 
       it('should get original ending column of selector', () => {
-        expect(sources[type][0].originalPosition.end.column).to.equal(17);
+        if (type === 'less' || type === 'stylus') {
+          expect(sources[type][0].originalPosition.end).to.equal(null);
+        } else {
+          expect(sources[type][0].originalPosition.end.column).to.equal(17);
+        }
       });
 
       it('should register properties as important', () => {
-        expect(sources[type][0].decls[1].important).to.equal(true);
+        expect(sources[type][1].decls[1].important).to.equal(true);
       });
     });
   });
