@@ -16,7 +16,6 @@ class Source {
       let map = fs.readFileSync(sourceMapURL).toString();
       this.smc = new sourceMap.SourceMapConsumer(JSON.parse(map));
     }
-    // console.log(this.smc)
   }
 
   getOriginalPosition(start, end) {

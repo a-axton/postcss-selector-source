@@ -36,13 +36,15 @@ function _buildDecls(decls) {
 function _buildMediaParams(params) {
   params = params.match(/\((.*?)\)/g);
 
-  return params.map(param => {
-    param = param.replace(/[\])(]/g, '').replace(/\s/g, '').split(':');
-    return {
-      property: param[0],
-      value: param[1]
-    };
-  });
+  if (params && params.length) {
+    return params.map(param => {
+      param = param.replace(/[\])(]/g, '').replace(/\s/g, '').split(':');
+      return {
+        property: param[0],
+        value: param[1]
+      };
+    });
+  }
 }
 
 function _buildRuleEntry(rule) {
