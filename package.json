@@ -65,9 +65,6 @@
     ]
   },
   "dependencies": {
-    "convert-source-map": "^1.1.1",
-    "postcss": "^5.0.8",
-    "scouter": "git://github.com/divshot/scouter.git#master",
-    "source-map": "^0.4.4"
+    "postcss": "^5.0.8"
   }
 }
