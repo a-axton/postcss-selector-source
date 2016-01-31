@@ -1,16 +1,21 @@
 import fs from 'fs';
 import sourceMap from 'source-map';
+import convert from 'convert-source-map';
 
 class Source {
   constructor() {
-    this.sourceMapURL = null;
+    this.smc = null;
   }
 
-  setSourceMapURL(cssRootDir, sourceMapURLComment) {
-    if (!cssRootDir) {return;}
-    this.sourceMapURL = sourceMapURLComment.split('/').pop();
-    let map = fs.readFileSync(cssRootDir + this.sourceMapURL);
-    this.smc = new sourceMap.SourceMapConsumer(JSON.parse(map));
+  setSourceMap(sourceMapURLComment) {
+    if (sourceMapURLComment.indexOf('base64') > -1) {
+      let map = convert.fromComment(sourceMapURLComment).toObject();
+      this.smc = new sourceMap.SourceMapConsumer(map);
+    } else {
+      let sourceMapURL = sourceMapURLComment.split('=').pop();
+      let map = fs.readFileSync(sourceMapURL).toString();
+      this.smc = new sourceMap.SourceMapConsumer(JSON.parse(map));
+    }
   }
 
   getOriginalPosition(start, end) {

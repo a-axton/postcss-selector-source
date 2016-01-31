@@ -23,12 +23,9 @@ function getStylusData(done) {
     fs.writeFileSync('./test/fixtures/stylus/test.css.map', JSON.stringify(style.sourcemap));
 
     postcss([
-      selectorList({
-        cssRootDir: './test/fixtures/stylus/',
-        callback: function(result) {
-          sources.stylus = result;
-          done();
-        }
+      selectorList(function(result) {
+        sources.stylus = result;
+        done();
       })
     ])
     .process(css)
@@ -40,17 +37,16 @@ function getSassData(done) {
   sass.render({
     file: './test/fixtures/scss/src/test.scss',
     sourceMap: './test/fixtures/scss/test.css.map',
-    outfile: './test/fixtures/scss/test.css'
+    outfile: './test/fixtures/scss/test.css',
+    outputStyle: 'expanded',
+    sourceMapEmbed: true
   }, function(err, results) {
-    fs.writeFileSync('./test/fixtures/scss/test.css.map', results.map);
+    fs.writeFileSync('./test/fixtures/scss/test.css', results.css.toString().trim());
 
     postcss([
-      selectorList({
-        cssRootDir: './test/fixtures/scss/',
-        callback: function(result) {
-          sources.sass = result;
-          done();
-        }
+      selectorList(function(result) {
+        sources.sass = result;
+        done();
       })
     ])
     .process(results.css.toString().trim())
@@ -61,23 +57,23 @@ function getSassData(done) {
 function getLessData(done) {
   var lessInput = fs.readFileSync('./test/fixtures/less/src/test.less');
 
-  less.render(lessInput.toString().trim(), {
+  less.render(lessInput.toString(), {
       filename: './test/fixtures/less/src/test.less',
-      includePaths: './test/fixtures/less/src'
+      includePaths: './test/fixtures/less/src',
+      sourceMap: {
+        sourceMapFileInline: true
+      }
     })
     .then(function(output) {
-      fs.writeFileSync('./test/fixtures/less/test.css.map', output.map);
+      fs.writeFileSync('./test/fixtures/less/test.css', output.css);
 
       postcss([
-        selectorList({
-          cssRootDir: './test/fixtures/less/',
-          callback: function(result) {
-            sources.less = result;
-            done();
-          }
+        selectorList(function(result) {
+          sources.less = result;
+          done();
         })
       ])
-      .process(output.css.toString().trim())
+      .process(output.css)
       .then(function() {});
     },
     function(error) {

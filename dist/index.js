@@ -21,14 +21,15 @@ function _buildDecls(decls) {
   return decls.map(function (decl) {
     var start = decl.source.start;
     var end = decl.source.end;
+    var important = decl.important ? true : false;
     var entry = {
       property: decl.prop,
       value: decl.value,
+      important: important,
       start: start,
       end: end
     };
-
-    if (source.sourceMapURL) {
+    if (source.smc) {
       entry.originalPosition = source.getOriginalPosition(start, end);
     }
 
@@ -69,38 +70,33 @@ function _buildRuleEntry(rule) {
     entry.params = _buildMediaParams(rule.parent.params);
   }
 
-  if (source.sourceMapURL) {
+  if (source.smc) {
     entry.originalPosition = source.getOriginalPosition(start, end);
   }
 
   selectors.push(entry);
 }
 
-module.exports = postcss.plugin("selector-source", function () {
-  var options = arguments[0] === undefined ? {} : arguments[0];
-
+module.exports = postcss.plugin("selector-source", function (callback) {
+  selectors = [];
   // logs each selector with startend position
   return function (css, result) {
-    css.eachComment(function (comment) {
+    css.walkComments(function (comment) {
       if (comment.text.indexOf("!ATTN") > -1) {
         removeAbove.set(comment.source.start.line);
       } else if (comment.text.indexOf("sourceMappingURL") > -1) {
-        source.setSourceMapURL(options.cssRootDir, comment.text);
+        source.setSourceMap(comment.text);
       }
     });
 
-    css.eachRule(_buildRuleEntry);
+    css.walkRules(_buildRuleEntry);
 
-    if (!source.sourceMapURL) {
+    if (!source.smc) {
       result.warn("make sure an external css source-map is being generated");
     }
 
-    if (!options.cssRootDir) {
-      result.warn("use the cssRootDir option to specify where your css source map file is");
-    }
-
-    if (options.callback && typeof options.callback === "function") {
-      options.callback(selectors);
+    if (callback && typeof callback === "function") {
+      callback(selectors);
     } else {
       result.warn("provide a callback to see the results");
     }
