@@ -22,7 +22,6 @@ function getStylusData(done) {
 
   style.render(function(err, css) {
     fs.writeFileSync('./test/fixtures/stylus/test.css.map', JSON.stringify(style.sourcemap));
-
     postcss([
       selectorList(function(result) {
         sources.stylus = result;
@@ -43,7 +42,6 @@ function getScssData(done) {
     sourceMapEmbed: true
   }, function(err, results) {
     fs.writeFileSync('./test/fixtures/scss/test.css', results.css.toString().trim());
-
     postcss([
       selectorList(function(result) {
         sources.scss = result;
@@ -64,7 +62,6 @@ function getSassData(done) {
     sourceMapEmbed: true
   }, function(err, results) {
     fs.writeFileSync('./test/fixtures/sass/test.css', results.css.toString().trim());
-
     postcss([
       selectorList(function(result) {
         sources.sass = result;
@@ -88,7 +85,6 @@ function getLessData(done) {
     })
     .then(function(output) {
       fs.writeFileSync('./test/fixtures/less/test.css', output.css);
-
       postcss([
         selectorList(function(result) {
           sources.less = result;
